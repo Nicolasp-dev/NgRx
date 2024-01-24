@@ -6,6 +6,11 @@ import {
   NavigationStart,
   Router,
 } from "@angular/router";
+import { AppState } from "./reducers";
+import { Store, select } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { isLoggedIn, isLoggedOut } from "./auth/auht.selector";
 
 @Component({
   selector: "app-root",
@@ -14,8 +19,10 @@ import {
 })
 export class AppComponent implements OnInit {
   loading = true;
+  isLoggedIn$: Observable<boolean>;
+  isLoggedOut$: Observable<boolean>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -36,7 +43,11 @@ export class AppComponent implements OnInit {
         }
       }
     });
+
+    this.isLoggedIn$ = this.store.pipe(select(isLoggedIn));
+
+    this.isLoggedOut$ = this.store.pipe(select(isLoggedOut));
   }
 
-  logout() {}
+  logout(): void {}
 }
