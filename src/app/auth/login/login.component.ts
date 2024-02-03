@@ -34,10 +34,12 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     const val = this.form.value;
+
     this.auth
       .login(val.email, val.password)
       .pipe(
         tap((user) => {
+
           this.store.dispatch(AuthActions.login({ user }));
 
           this.router.navigateByUrl("/courses");
@@ -46,3 +48,4 @@ export class LoginComponent implements OnInit {
       .subscribe({ next: noop, error: () => alert("login failed") });
   }
 }
+

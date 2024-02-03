@@ -10,6 +10,8 @@ import { LoginComponent } from "./login/login.component";
 import { StoreModule } from "@ngrx/store";
 import * as fromAuth from "./reducers";
 import { AuthGuard } from "./auth.guard";
+import { EffectsModule } from "@ngrx/effects";
+import { AuthEffects } from "./auth.effects";
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { AuthGuard } from "./auth.guard";
     MatButtonModule,
     RouterModule.forChild([{ path: "", component: LoginComponent }]),
     StoreModule.forFeature("auth", fromAuth.authReducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [LoginComponent],
   exports: [LoginComponent],
